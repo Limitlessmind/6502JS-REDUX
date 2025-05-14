@@ -1,5 +1,4 @@
 6502 REDUX:
-
 Features:
 
 64x64 Screen Resolution
