@@ -1,0 +1,153 @@
+<!doctype html>
+<html>
+  <head>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <title>6502 assembler/simulator</title>
+  </head>
+  <body>
+
+    <div class="widget">
+      <div class="buttons">
+        <input type="button" value="Assemble" class="assembleButton" />
+        <input type="button" value="Run" class="runButton" />
+        <input type="button" value="Reset" class="resetButton" />
+        <input type="button" value="Hexdump" class="hexdumpButton" />
+        <input type="button" value="Disassemble" class="disassembleButton" />
+        <input type="button" value="Notes" class="notesButton" />
+        <input type="button" value="Save" class="saveButton" />
+      </div>
+
+      <textarea class="code"></textarea>
+
+      <canvas class="screen" width="400" height="400"></canvas>
+
+      <div class="debugger">
+        <input type="checkbox" class="debug" name="debug" />
+        <label for="debug">Debugger</label>
+        <div class="minidebugger"></div>
+        <div class="buttons">
+          <input type="button" value="Step" class="stepButton" />
+          <input type="button" value="Jump to ..." class="gotoButton" />
+        </div>
+      </div>
+
+      <div class="monitorControls">
+        <label for="monitoring">Monitor</label>
+        <input type="checkbox" class="monitoring" name="monitoring" />
+
+        <label for="start">Start: $</label>
+        <input type="text" value="0" class="start" name="start" />
+        <label for="length">Length: $</label>
+        <input type="text" value="ff" class="length" name="length" />
+      </div>
+      <div class="monitor"><pre><code></code></pre></div>
+      <div class="messages"><pre><code></code></pre></div>
+
+      <div class="notes" style="display: none">Notes:
+
+Memory location $fe contains a new random byte on every instruction.
+Memory location $ff contains the ascii code of the last key pressed.
+
+Memory locations $1000 to $1fff map to the screen pixels. Different values will
+draw different colour pixels. The colours are:
+
+Colour palette works using binary coding which you will have to translate to hex yourself.
+There are three bits for red and green and two for blue
+ R                 G                B
+000               000               00
+
+                Black #$00
+Red(low) #$20              Red(High) #$E0
+Green(low) #$04           Green(high) #$1C
+Blue(low) #$01            Blue(high) #$03
+Yellow #$3C               Cyan #$1F
+Magenta #$E3              White #$FF
+
+
+There are three ways to put down a number:
+
+#$ Immediate value, any value up to #$FF (255)
+$ Zero page, any value up to $FFFF  (65,535)
+$,X Indexed, any value up to $FF00 + X (65,535)
+$,Y Indexed, any value up to $FF00 + Y (65,535)
+# Decimal, any value up to #255
+
+Instruction list:
+ Data transfer Instructions:
+  LDA	 Load to Accumulator.
+  LDX 	Load to X Register.
+  LDY	 Load to Y Register.
+  STA	 Store Accumulator.
+  STX	 Store X Register.
+  STY 	Store Y Register.
+  TAX 	Transfer A to X.
+  TAY	 Transfer A to Y.
+  TSX 	Transfer SP to X.
+  TXA 	Transfer X to A.
+  TXS 	Transfer X to SP.
+  TYA 	Transfer Y to A.
+ 
+  Arithmetic Instructions:
+  ADC 	Add with Carry.
+  SBC 	Subtract with Carry.
+  INC	 Increment Memory.
+  INX 	Increment X.
+  INY	 Increment Y.
+  DEC	 Decrement Memory.
+  DEX	 Decrement X.
+  DEY	 Decrement Y.
+ 
+ Logical Instructions:
+  AND	 Logical AND.
+  EOR	 Exclusive OR.
+  ORA 	Logical OR.
+  BIT	 Test Bits.
+
+ Shift and rotation instructions:
+  ASL	 Shift Left.
+  LSR 	Shift Right.
+  ROL	 Rotate Left.
+  ROR 	Rotate Right.
+
+ Branch Instructions:
+  BCC	 Branch if Carry Clear.
+  BCS 	Branch if Carry Set.
+  BEQ	 Branch if Equal.
+  BMI 	Branch if Negative.
+  BNE	 Branch if Not Equal.
+  BPL 	Branch if Positive.
+  BVC	 Branch if Overflow Clear.
+  BVS 	Branch if Overflow Set.
+
+ Jump and call Instructions:
+  JMP	 Jump to Address.
+  JSR 	Jump to Subroutine.
+  RTS	 Return from Subroutine.
+
+ Flag Instructions:
+  CLC 	Clear Carry Flag.
+  CLD	 Clear Decimal Mode.
+  CLI	 Clear Interrupt Disable.
+  CLV	 Clear Overflow Flag.
+  SEC	 Set Carry Flag.
+  SED	 Set Decimal Mode.
+  SEI	 Set Interrupt Disable.
+
+ System Instructions:
+  BRK	 Force Interrupt.
+  NOP	 No Operation.
+  RTI	 Return from Interrupt.
+
+ Comparison Instructions:
+  CMP	 Compare with A.
+  CPX	 Compare with X.
+  CPY	 Compare with Y.
+
+      </div>
+
+      <script src="es5-shim.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+      <script src="assembler.js"></script>
+      <script src="6502-assembler-logic.js"></script>
+  </body>
+</html>
