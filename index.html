@@ -1,153 +1,157 @@
 <!doctype html>
 <html>
-  <head>
+<head>
     <link href="style.css" rel="stylesheet" type="text/css" />
-    <title>6502 assembler/simulator</title>
-  </head>
-  <body>
-
+    <title>6502 Assembler/Simulator</title>
+</head>
+<body>
     <div class="widget">
-      <div class="buttons">
-        <input type="button" value="Assemble" class="assembleButton" />
-        <input type="button" value="Run" class="runButton" />
-        <input type="button" value="Reset" class="resetButton" />
-        <input type="button" value="Hexdump" class="hexdumpButton" />
-        <input type="button" value="Disassemble" class="disassembleButton" />
-        <input type="button" value="Notes" class="notesButton" />
-        <input type="button" value="Save" class="saveButton" />
-      </div>
-
-      <textarea class="code"></textarea>
-
-      <canvas class="screen" width="400" height="400"></canvas>
-
-      <div class="debugger">
-        <input type="checkbox" class="debug" name="debug" />
-        <label for="debug">Debugger</label>
-        <div class="minidebugger"></div>
         <div class="buttons">
-          <input type="button" value="Step" class="stepButton" />
-          <input type="button" value="Jump to ..." class="gotoButton" />
+            <input type="button" value="Assemble" class="assembleButton" />
+            <input type="button" value="Run" class="runButton" />
+            <input type="button" value="Reset" class="resetButton" />
+            <input type="button" value="Hexdump" class="hexdumpButton" />
+            <input type="button" value="Disassemble" class="disassembleButton" />
+            <input type="button" value="Save" class="saveButton" />
         </div>
-      </div>
 
-      <div class="monitorControls">
-        <label for="monitoring">Monitor</label>
-        <input type="checkbox" class="monitoring" name="monitoring" />
+        <textarea class="code"></textarea>
 
-        <label for="start">Start: $</label>
-        <input type="text" value="0" class="start" name="start" />
-        <label for="length">Length: $</label>
-        <input type="text" value="ff" class="length" name="length" />
-      </div>
-      <div class="monitor"><pre><code></code></pre></div>
-      <div class="messages"><pre><code></code></pre></div>
+        <canvas class="screen" width="400" height="400"></canvas>
 
-      <div class="notes" style="display: none">Notes:
+        <div class="debugger">
+            <input type="checkbox" class="debug" name="debug" />
+            <label for="debug">Debugger</label>
+            <div class="minidebugger"></div>
+            <div class="buttons">
+                <input type="button" value="Step" class="stepButton" />
+                <input type="button" value="Jump to ..." class="gotoButton" />
+            </div>
+        </div>
 
-Memory location $fe contains a new random byte on every instruction.
-Memory location $ff contains the ascii code of the last key pressed.
+        <div class="messages"><pre><code></code></pre></div>
+        <div class="monitor"><pre><code></code></pre></div>
+        
+        <div class="monitorControls">
+            <label for="monitoring">Monitor</label>
+            <input type="checkbox" class="monitoring" name="monitoring" />
+            <label for="start">Start: $</label>
+            <input type="text" value="0" class="start" name="start" />
+            <label for="length">Length: $</label>
+            <input type="text" value="ff" class="length" name="length" />
+        </div>
 
-Memory locations $1000 to $1fff map to the screen pixels. Different values will
-draw different colour pixels. The colours are:
+        <!-- Updated Description Div -->
+        <div class="description" id="description">
+          <h1>6502JS-REDUX Description</h1>
+This 6502 assembler and simulator allows you to write, assemble, and run 6502 assembly code directly in your browser. It supports 8-bit RGB graphics, memory management, and a range of debugging tools for a complete assembly coding experience.
+            
+<p>64x64 screen with 8-bit color depth</p>
+Debugger for step-by-step execution
+Memory monitor for live inspection
+Project saving and loading
+<p>Memory location $fe contains a new random byte on every instruction.</p>
+<p>Memory location $ff contains the ascii code of the last key pressed.</p>
 
-Colour palette works using binary coding which you will have to translate to hex yourself.
-There are three bits for red and green and two for blue
- R                 G                B
-000               000               00
+<p>Memory locations $1000 to $2000 map to the screen pixels. Different values will draw different colour pixels.
+<h2>The colours are:</h2>
 
-                Black #$00
-Red(low) #$20              Red(High) #$E0
-Green(low) #$04           Green(high) #$1C
-Blue(low) #$01            Blue(high) #$03
-Yellow #$3C               Cyan #$1F
-Magenta #$E3              White #$FF
+WIP</p>
+<h2>There are three ways to put down a number:</h2>
 
+<p>#$ Immediate value, any value up to #$FF (255)</p>
+$ Zero page, any value up to $FFFF  (65,535)</p>
+$,X Indexed, any value up to $FF00 + X (65,535)</p>
+$,Y Indexed, any value up to $FF00 + Y (65,535)</p>
+# Decimal, any value up to #255</p>
 
-There are three ways to put down a number:
-
-#$ Immediate value, any value up to #$FF (255)
-$ Zero page, any value up to $FFFF  (65,535)
-$,X Indexed, any value up to $FF00 + X (65,535)
-$,Y Indexed, any value up to $FF00 + Y (65,535)
-# Decimal, any value up to #255
-
-Instruction list:
- Data transfer Instructions:
-  LDA	 Load to Accumulator.
-  LDX 	Load to X Register.
-  LDY	 Load to Y Register.
-  STA	 Store Accumulator.
-  STX	 Store X Register.
-  STY 	Store Y Register.
-  TAX 	Transfer A to X.
-  TAY	 Transfer A to Y.
-  TSX 	Transfer SP to X.
-  TXA 	Transfer X to A.
-  TXS 	Transfer X to SP.
-  TYA 	Transfer Y to A.
+<h2>Instruction list:</h2>
+ <h3>Data transfer Instructions:</h3>
+  LDA	 Load to Accumulator.</p>
+  LDX 	Load to X Register.</p>
+  LDY	 Load to Y Register.</p>
+  STA	 Store Accumulator.</p>
+  STX	 Store X Register.</p>
+  STY 	Store Y Register.</p>
+  TAX 	Transfer A to X.</p>
+  TAY	 Transfer A to Y.</p>
+  TSX 	Transfer SP to X.</p>
+  TXA 	Transfer X to A.</p>
+  TXS 	Transfer X to SP.</p>
+  TYA 	Transfer Y to A.</p>
  
-  Arithmetic Instructions:
-  ADC 	Add with Carry.
-  SBC 	Subtract with Carry.
-  INC	 Increment Memory.
-  INX 	Increment X.
-  INY	 Increment Y.
+  <h3>Arithmetic Instructions:</h3>
+  ADC 	Add with Carry.</p>
+  SBC 	Subtract with Carry.</p>
+  INC	 Increment Memory.</p>
+  INX 	Increment X.</p>
+  INY	 Increment Y.</p>
   DEC	 Decrement Memory.
-  DEX	 Decrement X.
-  DEY	 Decrement Y.
+  DEX	 Decrement X.</p>
+  DEY	 Decrement Y.</p>
  
- Logical Instructions:
-  AND	 Logical AND.
-  EOR	 Exclusive OR.
-  ORA 	Logical OR.
-  BIT	 Test Bits.
+ <h3>Logical Instructions:</h3>
+  AND	 Logical AND.</p>
+  EOR	 Exclusive OR.</p>
+  ORA 	Logical OR.</p>
+  BIT	 Test Bits.</p>
 
- Shift and rotation instructions:
-  ASL	 Shift Left.
-  LSR 	Shift Right.
-  ROL	 Rotate Left.
-  ROR 	Rotate Right.
+ <h3>Shift and rotation instructions:</h3>
+  ASL	 Shift Left.</p>
+  LSR 	Shift Right.</p>
+  ROL	 Rotate Left.</p>
+  ROR 	Rotate Right.</p>
 
- Branch Instructions:
-  BCC	 Branch if Carry Clear.
-  BCS 	Branch if Carry Set.
-  BEQ	 Branch if Equal.
-  BMI 	Branch if Negative.
-  BNE	 Branch if Not Equal.
-  BPL 	Branch if Positive.
-  BVC	 Branch if Overflow Clear.
-  BVS 	Branch if Overflow Set.
+ <h3>Branch Instructions:</h3>
+  BCC	 Branch if Carry Clear.</p>
+  BCS 	Branch if Carry Set.</p>
+  BEQ	 Branch if Equal.</p>
+  BMI 	Branch if Negative.</p>
+  BNE	 Branch if Not Equal.</p>
+  BPL 	Branch if Positive.</p>
+  BVC	 Branch if Overflow Clear.</p>
+  BVS 	Branch if Overflow Set.</p>
 
- Jump and call Instructions:
-  JMP	 Jump to Address.
-  JSR 	Jump to Subroutine.
-  RTS	 Return from Subroutine.
+ <h3>Jump and call Instructions:</h3>
+  JMP	 Jump to Address.</p>
+  JSR 	Jump to Subroutine.</p>
+  RTS	 Return from Subroutine.</p>
 
- Flag Instructions:
-  CLC 	Clear Carry Flag.
-  CLD	 Clear Decimal Mode.
-  CLI	 Clear Interrupt Disable.
-  CLV	 Clear Overflow Flag.
-  SEC	 Set Carry Flag.
-  SED	 Set Decimal Mode.
-  SEI	 Set Interrupt Disable.
+ <h3>Flag Instructions:</h3>
+  CLC 	Clear Carry Flag.</p>
+  CLD	 Clear Decimal Mode.</p>
+  CLI	 Clear Interrupt Disable.</p>
+  CLV	 Clear Overflow Flag.</p>
+  SEC	 Set Carry Flag.</p>
+  SED	 Set Decimal Mode.</p>
+  SEI	 Set Interrupt Disable.</p>
 
- System Instructions:
-  BRK	 Force Interrupt.
-  NOP	 No Operation.
-  RTI	 Return from Interrupt.
+ <h3>System Instructions:</h3>
+  BRK	 Force Interrupt.</p>
+  NOP	 No Operation.</p>
+  RTI	 Return from Interrupt.</p>
 
- Comparison Instructions:
-  CMP	 Compare with A.
-  CPX	 Compare with X.
-  CPY	 Compare with Y.
+ <h3>Comparison Instructions:</h3>
+  CMP	- Compare with A.</p>
+  CPX	- Compare with X.</p>
+  CPY	- Compare with Y.</p>
 
-      </div>
+<h2>Credits:</h2>
+Limitlessmind on GitHub</p>
+Skilldrick (Nick Morgan) on GitHub</p>
+Vkorbes on GitHub</p>
+BigEd on GitHub</p>
 
-      <script src="es5-shim.js"></script>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-      <script src="assembler.js"></script>
-      <script src="6502-assembler-logic.js"></script>
-  </body>
+
+
+    </div>
+        </div>
+
+        <script src="es5-shim.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script src="assembler.js"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    </div>
+
+</body>
 </html>
