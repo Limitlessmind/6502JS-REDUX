@@ -49,7 +49,6 @@ function SimulatorWidget(node) {
     });
     $node.find('.stepButton').click(simulator.debugExec);
     $node.find('.gotoButton').click(simulator.gotoAddr);
-    $node.find('.notesButton').click(ui.showNotes);
     $node.find('.code').keypress(simulator.stop);
     $node.find('.code').keypress(ui.initialize);
     $(document).keypress(memory.storeKeypress);
@@ -149,10 +148,6 @@ function SimulatorWidget(node) {
       $node.find('.monitor').toggle();
     }
 
-    function showNotes() {
-      $node.find('.messages code').html($node.find('.notes').html());
-    }
-
    $(document).ready(function () {
     const codeArea = $('.code');
 
@@ -228,7 +223,6 @@ function SimulatorWidget(node) {
       debugOn: debugOn,
       debugOff: debugOff,
       toggleMonitor: toggleMonitor,
-      showNotes: showNotes
     };
   }
 
@@ -296,7 +290,7 @@ function SimulatorWidget(node) {
 
     function storeByte(addr, value) {
       set(addr, value & 0xff);
-      if ((addr >= 0x1000) && (addr <= 0x2000)) {
+      if ((addr >= 0x1000) && (addr <= 0x2000 )) {
         display.updatePixel(addr);
       }
     }
